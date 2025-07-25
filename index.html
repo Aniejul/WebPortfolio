@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Navor's Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <!-- WELCOME SCREEN -->
+  
+   <div class="sparkles-container" id="global-sparkles"></div>
+   <audio id="click-sound" src="assets/click.mp3" preload="auto"></audio>
+
+   <script>
+    
+  document.addEventListener("mousemove", (e) => {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.width = sparkle.style.height = `${Math.random() * 15 + 5}px`;
+    sparkle.style.left = `${e.clientX}px`;
+    sparkle.style.top = `${e.clientY}px`;
+
+    const colors = [
+      '#7400B8', '#6930C3', '#5E60CE', '#5390D9',
+      '#4EA8DE', '#48BFE3', '#56CFE1', '#64DFDF',
+      '#72EFDD', '#80FFDB'
+    ];
+    sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    document.getElementById("global-sparkles").appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 600);
+  });
+let soundEnabled = false; // Default: sound is off
+
+// 🔊 Play sound on every click if enabled
+document.addEventListener("click", () => {
+  if (soundEnabled) {
+    const clickSound = document.getElementById("click-sound");
+    if (clickSound) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    }
+  }
+});
+  </script>
+
+  <div class="welcome-screen" id="welcome-screen">
+  <!-- 🎥 Background Video -->
+  <video autoplay muted loop playsinline class="welcome-bg-video">
+    <source src="assets/welcome-bg.mp4" type="video/mp4" />
+  </video>
+
+  <!-- ✨ Sparkles container -->
+  <div class="sparkles-container" id="sparkles-container"></div>
+
+  <div class="center-content">
+    <div class="welcome-icons">
+      <i class="glow-icon fas fa-terminal"></i>
+      <i class="glow-icon fas fa-globe"></i>
+      <i class="glow-icon fas fa-code"></i>
+    </div>
+    <div class="welcome-link">🌐www.navor.codes</div>
+  </div>
+</div>
+
+  <!-- HOMEPAGE -->
+  <section class="homepage hidden" id="homepage">
+    <header class="navbar">
+      <div class="icon-controls">
+  <div id="sound-toggle" title="Sound: Off">
+    <i class="fas fa-volume-mute"></i>
+  </div>
+  <button id="theme-toggle" aria-label="Toggle Theme">
+    <i class="fas fa-moon"></i>
+  </button>
+</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+      </nav>
+    </header>
+
+    <main class="hero animate-fadein">
+      <div class="text-content" data-aos="fade-up">
+        <h1>Hi, I'm <span>Navor</span></h1>
+        <p class="typewriter-text"><span id="typed"></span><span class="cursor">|</span></p>
+        <p class="desc">BSIT Student | Programmer | Web Developer</p>
+        <div class="tech-tags">
+          <span>#HTML</span><span>#CSS</span><span>#JavaScript</span><span>#Godot</span>
+        </div>
+        <div class="hero-buttons">
+          <a href="#experiences" class="btn" onclick="openModal('experienceModal')">My Experiences</a>
+          <a href="#contact" class="btn-secondary" onclick="openModal('contactModal')">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-video" data-aos="zoom-in">
+        <video autoplay muted loop>
+          <source src="assets/profile-video.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </main>
+
+    <div class="social-icons">
+      <a href="https://www.facebook.com/aniejul.navor" class="tilt"><i class="fab fa-facebook-f glow-icon-small"></i></a>
+      <a href="https://x.com/NavorJulie0101" class="tilt"><i class="fab fa-twitter glow-icon-small"></i></a>
+      <a href="https://www.instagram.com/an2tit/" class="tilt"><i class="fab fa-instagram glow-icon-small"></i></a>
+    </div>
+  </section>
+
+  <!-- AOS INIT + LIB -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+  </script>
+
+  <!-- JS LOGIC -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("welcome-active");
+  const homepage = document.getElementById("homepage");
+  setTimeout(() => {
+    document.getElementById("welcome-screen").style.display = "none";
+    homepage.classList.remove("hidden");
+    homepage.classList.add("visible");
+    document.body.classList.remove("welcome-active");
+    //document.getElementById("utility-icons").style.display = "flex";
+  }, 4000);
+
+    // 🔊 Sound Toggle Button
+const soundToggle = document.getElementById("sound-toggle");
+const soundIcon = soundToggle.querySelector("i");
+
+soundToggle.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  if (soundEnabled) {
+    soundIcon.classList.remove("fa-volume-mute");
+    soundIcon.classList.add("fa-volume-up");
+    soundToggle.title = "Sound: On";
+  } else {
+    soundIcon.classList.remove("fa-volume-up");
+    soundIcon.classList.add("fa-volume-mute");
+    soundToggle.title = "Sound: Off";
+  }
+  });
+
+  // ✨ Multi-colored Sparkles
+const sparkleColors = [
+  "#7400B8", "#6930C3", "#5E60CE", "#5390D9", "#4EA8DE",
+  "#48BFE3", "#56CFE1", "#64DFDF", "#72EFDD", "#80FFDB"
+];
+
+let lastSparkleTime = 0;
+document.addEventListener("mousemove", (e) => {
+  const now = Date.now();
+  if (now - lastSparkleTime > 30) {
+    lastSparkleTime = now;
+
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = `${e.clientX}px`;
+    sparkle.style.top = `${e.clientY}px`;
+
+    // 🎨 Random sparkle color from palette
+    const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+    sparkle.style.backgroundColor = color;
+    sparkle.style.boxShadow = `0 0 8px ${color}`;
+
+    document.getElementById("sparkles-container").appendChild(sparkle);
+
+    setTimeout(() => sparkle.remove(), 600);
+  }
+  });
+
+      // Typing Effect
+      const typedText = document.getElementById("typed");
+      const phrases = ["Tech Enthusiast", "Web Developer", "Future Web Designer"];
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentPhrase = phrases[phraseIndex];
+        if (isDeleting) {
+          typedText.textContent = currentPhrase.substring(0, charIndex--);
+        } else {
+          typedText.textContent = currentPhrase.substring(0, charIndex++);
+        }
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(type, 1000);
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(type, 300);
+        } else {
+          setTimeout(type, isDeleting ? 50 : 100);
+        }
+      }
+
+      setTimeout(type, 500);
+
+      // Theme Toggle
+      const toggleBtn = document.getElementById("theme-toggle");
+      toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("light-mode");
+        const icon = toggleBtn.querySelector("i");
+        icon.classList.toggle("fa-moon");
+        icon.classList.toggle("fa-sun");
+      });
+
+      // Parallax Tilt
+      VanillaTilt.init(document.querySelectorAll(".tilt"), {
+        max: 15,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.3
+      });
+
+      // Portfolio Filtering
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+      filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+          document.querySelector(".filter-btn.active").classList.remove("active");
+          button.classList.add("active");
+
+          const filter = button.getAttribute("data-filter");
+          portfolioItems.forEach(item => {
+            const category = item.getAttribute("data-category");
+            item.style.display = (filter === "all" || filter === category) ? "block" : "none";
+          });
+        });
+      });
+    });
+  </script>
+
+
+<!-- ABOUT SECTION -->
+<section id="about" class="about-section" data-aos="fade-up">
+  <div class="about-container">
+    <!-- Text Content with animations -->
+    <div class="about-text">
+      <h2 class="section-title" data-aos="fade-right" data-aos-delay="100">About Me</h2>
+      <p class="subtitle" data-aos="fade-right" data-aos-delay="200">
+        ✨ Transforming ideas into digital experiences ✨
+      </p>
+      <h3 class="about-heading" data-aos="fade-left" data-aos-delay="400">
+        Hello, I'm <span>Navor</span>
+      </h3>
+      <p class="about-description" data-aos="fade-up" data-aos-delay="500">
+        I'm a BSIT student passionate about web development and interactive design.
+        My focus is on crafting seamless and engaging digital experiences.
+        I enjoy turning ideas into pixel-perfect realities and continuously push
+        myself to grow in both frontend and backend technologies.
+      </p>
+    </div>
+    <!-- Image with animation -->
+    <div class="about-image" data-aos="zoom-in" data-aos-delay="500">
+      <img src="assets/profile.jpg" alt="Navor Profile" />
+    </div>
+  </div>
+</section>
+
+
+<!-- PORTFOLIO SECTION -->
+<section id="portfolio" class="portfolio-section">
+  <h2 class="section-title" data-aos="fade-up">My Portfolio</h2>
+  <p class="subtitle" data-aos="fade-right" data-aos-delay="200">
+       Explore my journey through projects and technical expertise.
+        Each section represents a milestone in my continuous learning path.
+  <div class="portfolio-filter" data-aos="fade-up" data-aos-delay="400">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="web">Web</button>
+    <button class="filter-btn" data-filter="game">Game</button>
+    <button class="filter-btn" data-filter="design">Design</button>
+  </div>
+  <div class="portfolio-container">
+    <!-- Example Project Card -->
+    <div class="portfolio-item" data-category="web" data-aos="zoom-in" data-aos-delay="500">
+      <img src="assets/project1.jpg" alt="Project 1" />
+      <div class="overlay">
+        <h3>Personal Website</h3>
+        <p>HTML, CSS, JavaScript</p>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="game" data-aos="zoom-in" data-aos-delay="500">
+      <img src="assets/project2.jpg" alt="Project 2" />
+      <div class="overlay">
+        <h3>2D Game (Godot)</h3>
+        <p>Game Dev</p>
+      </div>
+    </div>
+    <div class="portfolio-item" data-category="design" data-aos="zoom-in" data-aos-delay="500">
+      <img src="assets/project3.jpg" alt="Project 3" />
+      <div class="overlay">
+        <h3>UI designer </h3>
+        <p>Adobe Photoshop</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experiences Popup Modal -->
+<div id="experienceModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('experienceModal')">&times;</span>
+    <h2>My Experiences</h2>
+    <video controls width="100%">
+      <source src="assets/experience.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+
+  <script>
+  function openModal(id) {
+    document.getElementById(id).style.display = "flex";
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+  </script>
+
+<!-- Contact Me Popup Modal -->
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
+    <h2>Contact Me</h2>
+    <form id="contact-form">
+      <input type="text" name="user_name" placeholder="Your Name" required />
+      <input type="email" name="user_email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init("uLBTVN38TMt3T4eUa");
+
+  document.getElementById("contact-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    emailjs.sendForm("julie1234567890", "template_a18cjon", this)
+      .then(() => {
+        alert("Message sent successfully!");
+        closeModal("contactModal");
+        this.reset();
+      }, (error) => {
+        alert("Failed to send message. Please try again.");
+        console.error(error);
+      });
+  });
+</script>
+
+</body>
+</html>
